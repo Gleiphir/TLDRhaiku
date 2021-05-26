@@ -62,8 +62,9 @@ class BertWithJumanModel():
 
         output = self.model(tokens_tensor)
         #all_encoder_layers, _ = self.model(tokens_tensor)
-        print(output)
-        print(output.last_hidden_state.size())
+        #print(output)
+        #print(output.last_hidden_state.size())
+        #loss = output.last_hidden_state.
 
         #embedding = all_encoder_layers[pooling_layer].cpu().numpy()[0]
         embedding = output.last_hidden_state.cpu().numpy()[0]
@@ -74,12 +75,17 @@ class BertWithJumanModel():
         elif pooling_strategy == "REDUCE_MEAN_MAX":
             return np.r_[np.max(embedding, axis=0), np.mean(embedding, axis=0)]
         elif pooling_strategy == "CLS_TOKEN":
-            return embedding[0]
+            return output.last_hidden_state[:,0,:]
+            #return embedding[0]
         else:
             raise ValueError("specify valid pooling_strategy: {REDUCE_MEAN, REDUCE_MAX, REDUCE_MEAN_MAX, CLS_TOKEN}")
+
+    def train(self,loss):
+        self.model.backward(loss)
 
 
 if __name__ == "__main__":
     mdl = BertWithJumanModel(bert_model_path)
     print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます",pooling_strategy="CLS_TOKEN").shape)
+    mdl.train(1.0)
     print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ",pooling_strategy="CLS_TOKEN").shape)

@@ -58,6 +58,7 @@ class BertWithJumanModel():
         self.model.eval()
         with torch.no_grad():
             all_encoder_layers, _ = self.model(tokens_tensor)
+        print(all_encoder_layers, _)
 
         embedding = all_encoder_layers[pooling_layer].cpu().numpy()[0]
         if pooling_strategy == "REDUCE_MEAN":
@@ -74,5 +75,5 @@ class BertWithJumanModel():
 
 if __name__ == "__main__":
     mdl = BertWithJumanModel(bert_model_path)
-    print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます").shape)
-    print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ").shape)
+    print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます",pooling_strategy="CLS_TOKEN").shape)
+    print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ",pooling_strategy="CLS_TOKEN").shape)

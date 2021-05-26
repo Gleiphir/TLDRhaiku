@@ -58,7 +58,7 @@ class BertWithJumanModel():
         self.model.eval()
         with torch.no_grad():
             all_encoder_layers, _ = self.model(tokens_tensor)
-        print(all_encoder_layers, _)
+        print(type(all_encoder_layers), type(_))
 
         embedding = all_encoder_layers[pooling_layer].cpu().numpy()[0]
         if pooling_strategy == "REDUCE_MEAN":

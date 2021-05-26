@@ -60,6 +60,7 @@ class BertWithJumanModel():
 
         self.model.eval()
         with torch.no_grad():
+            print(self.model(tokens_tensor))
             all_encoder_layers, _ = self.model(tokens_tensor)
         print(type(all_encoder_layers), type(_))
 

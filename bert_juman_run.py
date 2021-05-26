@@ -22,7 +22,6 @@ for row in read_tsv:
 tsv_file.close()
 
 token_text = " ".join(L[0]+L[1])
-input()
 
 class JumanTokenizer():
     def __init__(self):
@@ -75,5 +74,5 @@ class BertWithJumanModel():
 
 if __name__ == "__main__":
     mdl = BertWithJumanModel(bert_model_path)
-    print(mdl.get_sentence_embedding("以下の物品を発注しました").shape)
-    print(mdl.get_sentence_embedding("吾輩は猫である").shape)
+    print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます".replace(" ","")).shape)
+    print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ".replace(" ","")).shape)

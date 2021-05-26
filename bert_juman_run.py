@@ -47,7 +47,7 @@ class BertWithJumanModel():
         #preprocessed_text = self._preprocess_text(text)
         #tokens = self.juman_tokenizer.tokenize(preprocessed_text)
         #bert_tokens = self.bert_tokenizer.tokenize(" ".join(tokens))
-        bert_tokens = self.bert_tokenizer.tokenize(token_text)
+        bert_tokens = self.bert_tokenizer.tokenize(text)
         ids = self.bert_tokenizer.convert_tokens_to_ids(["[CLS]"] + bert_tokens[:126] + ["[SEP]"]) # max_seq_len-2
         tokens_tensor = torch.tensor(ids).reshape(1, -1)
 
@@ -74,5 +74,5 @@ class BertWithJumanModel():
 
 if __name__ == "__main__":
     mdl = BertWithJumanModel(bert_model_path)
-    print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます".replace(" ","")).shape)
-    print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ".replace(" ","")).shape)
+    print(mdl.get_sentence_embedding("二 人 の 男 が 家 の 列 の 後ろ に いる 見物人 の グループ に 話し かけて い ます").shape)
+    print(mdl.get_sentence_embedding("２ 匹 の 犬 が 店 の 外 で 縛ら れて おり 、 自転車 が 店 の 壁 に もたれ かかって い ます ").shape)

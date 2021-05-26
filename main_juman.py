@@ -2,8 +2,12 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from pytorch_pretrained_bert import BertTokenizer, BertModel
+from transformers import BertTokenizer, BertModel
 from pyknp import Juman
+
+model = BertModel.from_pretrained("/mnt/Pretrained/jacobzh/Japanese_L-24_H-1024_A-16_E-30_BPE_WWM_transformers/")
+bert_tokenizer = BertTokenizer("/mnt/Pretrained/jacobzh/Japanese_L-24_H-1024_A-16_E-30_BPE_WWM_transformers/vocab.txt",
+                               do_lower_case=False, do_basic_tokenize=False)
 
 
 class JumanTokenizer():
@@ -52,3 +56,12 @@ class BertWithJumanModel():
             return embedding[0]
         else:
             raise ValueError("specify valid pooling_strategy: {REDUCE_MEAN, REDUCE_MAX, REDUCE_MEAN_MAX, CLS_TOKEN}")
+
+
+if __name__ =='__main__':
+    juman_tokenizer = JumanTokenizer()
+
+    tokens = juman_tokenizer.tokenize("")
+    bert_tokens = bert_tokenizer.tokenize(" ".join(tokens))
+    ids = bert_tokenizer.convert_tokens_to_ids(["[CLS]"] + bert_tokens[:126] + ["[SEP]"])
+    tokens_tensor = torch.tensor(ids).reshape(1, -1)

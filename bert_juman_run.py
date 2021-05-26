@@ -50,7 +50,7 @@ class BertWithJumanModel():
         bert_tokens = self.bert_tokenizer.tokenize(text)
         ids = self.bert_tokenizer.convert_tokens_to_ids(["[CLS]"] + bert_tokens[:126] + ["[SEP]"]) # max_seq_len-2
         tokens_tensor = torch.tensor(ids).reshape(1, -1)
-
+        print(tokens_tensor)
         if self.use_cuda:
             tokens_tensor = tokens_tensor.to('cuda')
             self.model.to('cuda')

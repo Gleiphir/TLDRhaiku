@@ -12,40 +12,34 @@ def similarity(a:list,b:list):
 
 tsv_file = open(r"jsnli_1.1/train_wo_filtering.tsv",encoding='utf-8')
 read_tsv = csv.reader(tsv_file, delimiter="\t")
-
+out_file = open(r"jsnli_1.1/out_train_wo_filtering.tsv","w",encoding='utf-8')
+writer = csv.writer(out_file, delimiter="\t")
 text = []
 parts_original = []
 parts_resplit = []
-i=0
+
+def reparse(S:str):
+    global knp
+    result = knp.parse(S.replace(" ",""))
+    tags = [tag for tag in result.tag_list()]
+    L = []
+    for tag in tags:
+        L.extend([mrph.midasi for mrph in tag.mrph_list()])
+    return " ".join(L)
+start_t = time.time()
+
+i =0
 for row in read_tsv:
-    if row[0] == 'contradiction':continue
-    text.append(row[1].replace(" ", ""))
-    parts_original.append(row[1].split(' '))
-    text.append(row[2].replace(" ", ""))
-    parts_original.append(row[2].split(' '))
+    #if row[0] == 'contradiction':continue
+    writer.writerow([row[0][0],reparse(row[1]),reparse(row[2])])
     #result = knp.parse(row.replace)
     #parts = [mrph.midasi for mrph in tag.mrph_list() for tag in result.tag_list()]
-    i = i+1
+    i+=1
+    if i%10 == 9:
+        print("# {} - {}".format(i,time.time() -start_t))
 
-start = time.time()
-for i,row in enumerate(text):
-    parts = []
-
-    result = knp.parse(row)
-    tags = [tag for tag in result.tag_list()]
-    for tag in tags:
-        parts.extend([mrph.midasi for mrph in tag.mrph_list() ])
-
-    parts_resplit.append(parts)
-    print(" ".join(parts))
+out_file.close()
 
 tsv_file.close()
 
-simS = []
-
-for j in range(i):
-    X = similarity(parts_original[j], parts_resplit[j])
-    simS.append(X)
-
-print(sum(simS) / len(simS))
 

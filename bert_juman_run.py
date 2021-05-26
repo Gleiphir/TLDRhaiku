@@ -36,8 +36,11 @@ class BertWithJumanModel():
     def __init__(self, bert_path, vocab_file_name="vocab.txt", use_cuda=True):
         #self.juman_tokenizer = JumanTokenizer()
         self.model = BertModel.from_pretrained(bert_path)
+        self.bert_tokenizer = BertTokenizer.from_pretrained(bert_path)
+        """
         self.bert_tokenizer = BertTokenizer(Path(bert_path) / vocab_file_name,
                                             do_lower_case=False, do_basic_tokenize=False)
+        """
         self.use_cuda = use_cuda
 
     def _preprocess_text(self, text):

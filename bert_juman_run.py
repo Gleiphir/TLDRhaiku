@@ -65,7 +65,7 @@ class BertWithJumanModel():
         print(output.last_hidden_state.size())
 
         #embedding = all_encoder_layers[pooling_layer].cpu().numpy()[0]
-        embedding = output.last_hidden_state[pooling_layer].cpu().numpy()[0]
+        embedding = output.last_hidden_state.cpu().numpy()[0]
         if pooling_strategy == "REDUCE_MEAN":
             return np.mean(embedding, axis=0)
         elif pooling_strategy == "REDUCE_MAX":

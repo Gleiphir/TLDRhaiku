@@ -59,9 +59,10 @@ class BertWithJumanModel():
             self.model.to('cuda')
 
         self.model.eval()
-        with torch.no_grad():
-            output = self.model(tokens_tensor)
-            #all_encoder_layers, _ = self.model(tokens_tensor)
+
+        output = self.model(tokens_tensor)
+        #all_encoder_layers, _ = self.model(tokens_tensor)
+        print(output)
         print(output.last_hidden_state.size())
 
         #embedding = all_encoder_layers[pooling_layer].cpu().numpy()[0]

@@ -6,7 +6,7 @@ from transformers import BertTokenizer, BertModel
 from pyknp import Juman
 import csv
 
-bert_model_path = "/mnt/Pretrained/jacobzh/Japanese_L-24_H-1024_A-16_E-30_BPE_WWM_transformers"
+bert_model_path = "/mnt/Pretrained/jacobzh/Japanese_L-12_H-768_A-12_E-30_BPE_transformers"
 
 tsv_file = open(r"jsnli_1.1/dev.tsv",encoding='utf-8')
 read_tsv = csv.reader(tsv_file, delimiter="\t")

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals # It is not necessary when you use python3.
 from pyknp import KNP
 knp = KNP(jumanpp=False)     # Default is JUMAN++. If you use JUMAN, use KNP(jumanpp=False)
-result = knp.parse("下鴨神社の参道は暗かった。")
+result = knp.parse("閉鎖された場所にいるキリンを見ている人がいる")
 
 print("文節")
 for bnst in result.bnst_list(): # 各文節へのアクセス
